@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
-import { ResumeForm } from "@/components/ResumeForm";
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -14,6 +13,7 @@ export default function Home() {
     e.preventDefault();
     if (!file) return;
 
+    setLoading(true);
     setResult("");
 
     const formData = new FormData();
@@ -22,33 +22,42 @@ export default function Home() {
 
     const res = await fetch("/api/analyze", { method: "POST", body: formData });
     const data = await res.json();
+    setLoading(false);
 
     setResult(data.error ? `Error: ${data.error}` : data.output);
   }
 
   return (
     <main style={{ padding: 20 }}>
-      {result ? (
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          onChange={(e) => {
+            setRole(e.target.value);
+          }}
+          value={role}
+          className="border-2 mx-4"
+        />
+
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+        />
+
+        <button
+          type="submit"
+          disabled={!file || loading}
+          className="ml-10 border-2 p-2"
+        >
+          {loading ? "Analyzing…" : "Upload & Analyze"}
+        </button>
+      </form>
+
+      {result && (
         <div style={{ marginTop: 20 }}>
-          <button
-            onClick={() => {
-              setResult("");
-            }}
-          >
-            Retry
-          </button>
           <MarkdownPreview className="markdown-preview" source={result} />
         </div>
-      ) : (
-        <>
-          <ResumeForm
-            setFile={setFile}
-            file={file}
-            onSubmit={handleSubmit}
-            setRole={setRole}
-            role={role}
-          />
-        </>
       )}
     </main>
   );
