@@ -39,7 +39,6 @@ export function ResumeForm({
         <PlaceholdersAndVanishInput
           placeholders={placeholders}
           onChange={handleChange}
-          // onSubmit={onSubmit}
         />
       </div>
       <div className="mt-10">
