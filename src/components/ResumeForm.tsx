@@ -27,7 +27,7 @@ export function ResumeForm({
   return (
     <div className="h-[40rem] flex flex-col justify-center  items-center px-4">
       <div>
-        <h2 className=" text-xl text-left sm:text-5xl dark:text-white text-black">
+        <h2 className=" text-xl text-center sm:text-5xl dark:text-white text-black">
           Step 1: Upload CV
         </h2>
         <FileUpload setFile={setFile} file={file} />
