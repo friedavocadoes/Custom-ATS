@@ -3,6 +3,7 @@
 import { useState } from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import { ResumeForm } from "@/components/ResumeForm";
+import { X } from "lucide-react";
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -30,11 +31,12 @@ export default function Home() {
       {result ? (
         <div style={{ marginTop: 20 }}>
           <button
+            className="mb-5 bg-amber-700 p-2 cursor-pointer hover:bg-amber-800 rounded-xs"
             onClick={() => {
               setResult("");
             }}
           >
-            Retry
+            <X />
           </button>
           <MarkdownPreview className="markdown-preview" source={result} />
         </div>
