@@ -51,6 +51,19 @@ export default function Home() {
           />
         </>
       )}
+
+      <footer className="text-center text-sm  font-semibold">
+        <p>
+          {"made with "} <span className="text-red-600">{"<3"} </span> {" by "}
+          <a
+            href="https://github.com/friedavocadoes"
+            target="blank"
+            className="text-blue-500 hover:text-blue-700 transition-all"
+          >
+            friedavocadoes
+          </a>
+        </p>
+      </footer>
     </main>
   );
 }
