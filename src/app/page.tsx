@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import MarkdownPreview from "@uiw/react-markdown-preview";
+import axios from "axios";
 import { ResumeForm } from "@/components/ResumeForm";
 import { X } from "lucide-react";
 
@@ -20,10 +21,9 @@ export default function Home() {
     formData.append("file", file);
     formData.append("role", role);
 
-    const res = await fetch("/api/analyze", { method: "POST", body: formData });
-    const data = await res.json();
+    const res = await axios.post("/api/analyze", formData);
 
-    setResult(data.error ? `Error: ${data.error}` : data.output);
+    setResult(res.data.error ? `Error: ${res.data.error}` : res.data.output);
   }
 
   return (

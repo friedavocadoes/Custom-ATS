@@ -14,25 +14,37 @@ export async function POST(req: NextRequest) {
 
     const role = await form.get("role");
     const jd = await form.get("jd");
-    const text = `You are an expert ATS (Applicant Tracking System) evaluator.
+    const text = `You are an **ATS (Applicant Tracking System) Resume Evaluator**.
 
-        The candidate has applied for the role of ${role}.
-        ${jd && `Job Description: ${jd}`}
+The candidate is applying for the role of **${role}**.  
+${jd && `Job Description (for context): ${jd}`}
 
-        You will receive the candidate's resume as a PDF.
+You will receive the candidate's resume as a **PDF**.
 
-        Your tasks:
-        1. **ATS Compatibility Score** - Give a percentage (0-100) that reflects how well this resume would pass an ATS scan for the given role. make sure the score is in the biggest font size for markdown. (eg. # Score: 89/100)  
-        2. **Areas for Improvement** - List 3-5 actionable improvements (e.g., missing role-specific keywords, formatting tweaks, measurable impact).  
-        3. **Keyword & Skills Match** - Identify critical keywords or technologies for ${role} that are present, and list important ones that are missing.  
-        4. **Strengths** - List 3-5 concrete strengths of this resume (structure, quantifiable achievements, relevant tech stack, formatting, etc.).  
-        5. **Overall Verdict** - Give a 2-3 sentence human-readable summary of how likely this resume is to pass ATS filters and impress recruiters.
+### Your Output (in Markdown):
+# **ATS Score (for ${role}): XX/100**
 
-        Guidelines:
-        - Be specific and role-aware.  
-        - Use **Markdown** with clear headings and bullet points.  
-        - Keep feedback constructive and concise.
-        `;
+Provide ONLY the following sections, each brutally concise and critical:
+
+## 🔑 Key Fixes (Top Priorities)
+- List the **3–5 most urgent changes** needed to beat ATS and recruiters (missing keywords, weak phrasing, format issues, metrics, etc.).  
+- Be blunt and actionable—no generic advice.
+
+## ✅ Strengths
+- 3–5 specific points where the resume performs well (structure, impact, role alignment, quantifiable results, etc.).
+
+## ⚡ Keyword Match
+- **Present:** Important keywords/skills from the job description already in the resume.  
+- **Missing:** High-value keywords/skills that are absent or weak.
+
+## 🏁 Verdict
+- A **2–3 sentence** direct summary of the resume’s chances (e.g., “Likely rejected without X,” or “Strong ATS pass but weak recruiter appeal”).
+
+### Rules
+- Be **role-aware**.  
+- Avoid fluff or explanations—**only critical insights**.  
+- Use **Markdown headings and bullet points** for clarity.
+`;
 
     const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
