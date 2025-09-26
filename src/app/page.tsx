@@ -53,6 +53,16 @@ export default function Home() {
       )}
 
       <footer className="text-center text-sm  font-semibold">
+        <p className="mb-4 text-md">
+          Acquired by{" "}
+          <a
+            href="https://flintai.vercel.app/resumeAI"
+            className="text-blue-500 hover:text-blue-700 transition-all"
+          >
+            Flint.ai/resumeAI
+          </a>
+        </p>
+
         <p>
           {"made with "} <span className="text-red-600">{"<3"} </span> {" by "}
           <a
